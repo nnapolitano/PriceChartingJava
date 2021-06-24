@@ -10,13 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="452dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/buttonRequest"
@@ -24,9 +26,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="#414af4"
-        android:text="Click Here To Send HTTP Request To Server And See Response Displayed As Toast"
+        android:text="Click Here To Lookup Game Info on PriceCharting"
         android:textColor="#ffffff"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="172dp" />
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </Button>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

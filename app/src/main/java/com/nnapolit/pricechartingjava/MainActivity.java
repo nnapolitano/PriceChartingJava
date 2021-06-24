@@ -28,9 +28,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import static com.android.volley.VolleyLog.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
-                sendAndRequestResponse();
-
+                sendAndRequestResponse(v);
+                
             }
         });
     }
@@ -92,12 +91,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
     private String url = "https://www.pricecharting.com/api/product?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&id=6910";
 
-    private void sendAndRequestResponse() {
+    private String productText = "";
+
+    private void sendAndRequestResponse(View v) {
 
         //RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(this);
@@ -107,17 +107,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                Toast.makeText(getApplicationContext(),"Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
-
+                Toast.makeText(getApplicationContext(), "Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
+                productText = response.toString();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.i(TAG,"Error :" + error.toString());
+                Log.i(TAG, "Error :" + error.toString());
             }
         });
 
         mRequestQueue.add(mStringRequest);
+
+        updateProductInfoDisplay(v, productText);
+    }
+
+    public void updateProductInfoDisplay(View v, String s) {
+        TextView tv = (TextView) v.getRootView().findViewById(R.id.text_home);
+        {
+            tv.setText(s);
+        }
     }
 }
