@@ -1,6 +1,19 @@
 package com.nnapolit.pricechartingjava;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -9,27 +22,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.util.Log;
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.nnapolit.pricechartingjava.model.product.ProductMapper;
 
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 sendAndRequestResponse(v);
-                
+
             }
         });
     }
@@ -107,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                Toast.makeText(getApplicationContext(), "Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
+//                Toast.makeText(getApplicationContext(), "Response :" + response.toString(), Toast.LENGTH_LONG).show();//display the response on screen
                 productText = response.toString();
             }
         }, new Response.ErrorListener() {
@@ -120,13 +117,31 @@ public class MainActivity extends AppCompatActivity {
 
         mRequestQueue.add(mStringRequest);
 
-        updateProductInfoDisplay(v, productText);
+
+        ProductMapper productMapper = new ProductMapper();
+        Map<String, String> mappedInfo = productMapper.convertJsonToHashMap(productText);
+        updateProductInfoDisplay(v, mappedInfo);
     }
 
-    public void updateProductInfoDisplay(View v, String s) {
-        TextView tv = (TextView) v.getRootView().findViewById(R.id.text_home);
+
+    public void updateProductInfoDisplay(View v, Map<String, String> m) {
+        TextView tvcn = (TextView) v.getRootView().findViewById(R.id.text_console_name);
         {
-            tv.setText(s);
+            String resourceString = "Console Name: " + m.get("console-name");
+            tvcn.setText(resourceString);
         }
+
+        TextView tvpn = (TextView) v.getRootView().findViewById(R.id.text_product_name);
+        {
+            String resourceString = "Product Name: " + m.get("product-name");
+            tvpn.setText(resourceString);
+        }
+
+        TextView tvpid = (TextView) v.getRootView().findViewById(R.id.text_product_id);
+        {
+            String resourceString = "Product ID: " + m.get("id");
+            tvpid.setText(resourceString);
+        }
+
     }
 }
