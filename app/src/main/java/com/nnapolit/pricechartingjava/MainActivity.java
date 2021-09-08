@@ -90,11 +90,22 @@ public class MainActivity extends AppCompatActivity {
 
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "https://www.pricecharting.com/api/product?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&id=6910";
-
+    private String baseUrl = "https://www.pricecharting.com/api/product?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&id=";
     private String productText = "";
+    private String url = "";
+
+
+    private void collectProductId(){
+        processRequest("6910");
+    }
+
+    private void processRequest(String productId){
+        url = baseUrl+productId;
+    }
 
     private void sendAndRequestResponse(View v) {
+
+        collectProductId();
 
         //RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(this);
@@ -124,22 +135,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void updateProductInfoDisplay(View v, Map<String, String> m) {
+    public void updateProductInfoDisplay(View v, Map<String, String> mappedInfo) {
         TextView tvcn = (TextView) v.getRootView().findViewById(R.id.text_console_name);
         {
-            String resourceString = "Console Name: " + m.get("console-name");
+            String resourceString = "Console Name: " + mappedInfo.get("console-name");
             tvcn.setText(resourceString);
         }
 
         TextView tvpn = (TextView) v.getRootView().findViewById(R.id.text_product_name);
         {
-            String resourceString = "Product Name: " + m.get("product-name");
+            String resourceString = "Product Name: " + mappedInfo.get("product-name");
             tvpn.setText(resourceString);
         }
 
         TextView tvpid = (TextView) v.getRootView().findViewById(R.id.text_product_id);
         {
-            String resourceString = "Product ID: " + m.get("id");
+            String resourceString = "Product ID: " + mappedInfo.get("id");
             tvpid.setText(resourceString);
         }
 
