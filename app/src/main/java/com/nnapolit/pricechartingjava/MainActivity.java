@@ -24,6 +24,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import com.nnapolit.pricechartingjava.controller.Product;
 import com.nnapolit.pricechartingjava.model.product.ProductMapper;
 
 import java.util.Map;
@@ -95,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
     private String url = "";
 
 
-    private void collectProductId(){
+    private void collectProductId(View v){
         processRequest("6910");
+        Product product = new Product();
+        product.readFile(v);
+
     }
 
     private void processRequest(String productId){
@@ -105,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendAndRequestResponse(View v) {
 
-        collectProductId();
+        collectProductId(v);
 
         //RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(this);
