@@ -98,10 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void collectProductId(View v){
-        processRequest("6910");
         Product product = new Product();
-        product.readFile(v);
-
+        processRequest(product.readFile(v));
     }
 
     private void processRequest(String productId){
